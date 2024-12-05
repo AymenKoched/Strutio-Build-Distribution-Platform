@@ -8,6 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "stack:up": "docker-compose -f ./docker-compose.yml up -d",
+    "stack:down": "docker-compose -f ./docker-compose.yml down",
     "format": "prettier --list-different 'src/**/*{.css,.scss,.mdx}'",
     "format:fix": "yarn format --write",
     "tslint": "eslint 'src/**/*{.ts,.tsx}'",
@@ -16,9 +18,15 @@
     "lint:fix": "yarn format:fix && yarn tslint:fix"
   },
   "dependencies": {
+    "@radix-ui/themes": "^3.1.6",
+    "@tanstack/react-query": "^5.62.2",
+    "classnames": "^2.5.1",
     "next": "15.0.3",
+    "pg": "^8.13.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
     "@commitlint/cli": "17.1.2",

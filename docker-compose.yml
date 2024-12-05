@@ -1,0 +1,30 @@
+version: '2.3'
+
+services:
+  postgres:
+    container_name: postgres-strutio
+    image: postgres:15.2-alpine
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: my-password
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin4-strutio
+    image: dpage/pgadmin4
+    depends_on:
+      postgres:
+        condition: service_started
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - '9099:80'
+
+volumes:
+  db-data:
