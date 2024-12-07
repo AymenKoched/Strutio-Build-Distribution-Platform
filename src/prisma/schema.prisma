@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Build {
+  id              String           @id @default(cuid())
+  name            String
+  timestamp       DateTime         @default(now())
+  AttributeBuilds AttributeBuild[]
+}
+
+model Attribute {
+  id              String           @id @default(cuid())
+  name            String           @unique
+  type            AttributeType
+  AttributeBuilds AttributeBuild[]
+}
+
+model AttributeBuild {
+  buildId     String
+  attributeId String
+
+  value String
+
+  build     Build     @relation(fields: [buildId], references: [id])
+  attribute Attribute @relation(fields: [attributeId], references: [id])
+
+  @@id([buildId, attributeId])
+}
+
+enum AttributeType {
+  string
+  number
+  boolean
+  date
+}
