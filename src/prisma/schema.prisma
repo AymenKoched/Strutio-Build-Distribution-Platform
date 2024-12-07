@@ -22,6 +22,8 @@ model Attribute {
   name            String           @unique
   type            AttributeType
   AttributeBuilds AttributeBuild[]
+
+  FilterCondition FilterCondition[]
 }
 
 model AttributeBuild {
@@ -41,4 +43,56 @@ enum AttributeType {
   number
   boolean
   date
+}
+
+model Filter {
+  id   String @id @default(cuid())
+  name String
+
+  filterGroupId String      @unique
+  filterGroup   FilterGroup @relation(fields: [filterGroupId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FilterGroup {
+  id       String               @id @default(cuid())
+  operator FilterGroupOperator?
+
+  filterConditionId String?          @unique
+  filterCondition   FilterCondition? @relation(fields: [filterConditionId], references: [id])
+
+  parentGroupId String?
+  parentGroup   FilterGroup?  @relation("ParentChild", fields: [parentGroupId], references: [id])
+  subGroups     FilterGroup[] @relation("ParentChild")
+
+  Filter Filter? @relation
+}
+
+enum FilterGroupOperator {
+  AND
+  OR
+}
+
+model FilterCondition {
+  id String @id @default(cuid())
+
+  attributeId String
+  attribute   Attribute @relation(fields: [attributeId], references: [id])
+
+  operator FilterConditionOperator
+  value    String
+
+  FilterGroup FilterGroup? @relation
+}
+
+enum FilterConditionOperator {
+  EQUALS
+  NOT_EQUALS
+  GREATER_THAN
+  GREATER_THAN_EQUALS
+  LESS_THAN
+  LESS_THAN_EQUALS
+  CONTAINS
 }

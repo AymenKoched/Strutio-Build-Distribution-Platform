@@ -5,7 +5,7 @@ import { Container, Theme } from '@radix-ui/themes';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Strutio - Filtering System',
+  title: 'Strutio | Filtering System',
   description: 'Strutio Filtering System',
 };
 
