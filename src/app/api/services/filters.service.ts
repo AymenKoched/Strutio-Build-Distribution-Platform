@@ -4,10 +4,13 @@ import {
   FilterGroupOperator,
   Prisma,
 } from '@prisma/client';
-import { FilterConditionDTO, FilterDTO } from '@strutio/models';
+import {
+  FilterConditionDTO,
+  FilterDTO,
+  FilterGroupType,
+} from '@strutio/models';
 import prisma from '@strutio/prisma/client';
 import { map } from 'lodash';
-import { NextResponse } from 'next/server';
 
 export const getFilterDetails = async (id: string) => {
   const filter = await prisma.filter.findUnique({
@@ -15,7 +18,7 @@ export const getFilterDetails = async (id: string) => {
   });
 
   if (!filter) {
-    return NextResponse.json({ error: 'Filter not found' }, { status: 404 });
+    throw new Error('Filter not found.');
   }
 
   const filterGroups: FilterGroup[] = await prisma.$queryRaw`
@@ -45,10 +48,7 @@ export const getFilterDetails = async (id: string) => {
     `;
 
   if (!filterGroups || filterGroups.length === 0) {
-    return NextResponse.json(
-      { error: 'FilterGroup not found or no related FilterGroups' },
-      { status: 404 },
-    );
+    throw new Error('FilterGroup not found or no related FilterGroups.');
   }
 
   const filterGroupIds = map(filterGroups, (fg) => fg.id);
@@ -67,7 +67,7 @@ export const getFilterDetails = async (id: string) => {
 
   const orderedFilterGroups = filterGroupIds.map((id) =>
     detailedFilterGroups.find((fg) => fg.id === id),
-  );
+  ) as FilterGroupType[];
 
   return { filter, filterGroups: orderedFilterGroups };
 };
@@ -100,7 +100,7 @@ export const deleteFilter = async (id: string) => {
   });
 
   if (!filter) {
-    return NextResponse.json({ error: 'Filter not found' }, { status: 404 });
+    throw new Error('Filter not found.');
   }
 
   await prisma.$transaction(async (tx) => {
@@ -124,7 +124,7 @@ export const updateFilter = async (id: string, payload: FilterDTO) => {
   });
 
   if (!existingFilter) {
-    return NextResponse.json({ error: 'Filter not found' }, { status: 404 });
+    throw new Error('Filter not found.');
   }
 
   await prisma.$transaction(async (tx) => {
