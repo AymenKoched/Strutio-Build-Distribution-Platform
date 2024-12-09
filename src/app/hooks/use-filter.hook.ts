@@ -15,7 +15,7 @@ export function useFilters(name?: string) {
     isError,
     error,
     isLoading,
-  } = useQuery<FilterType[]>(['filters'], searchFilters, {
+  } = useQuery<FilterType[]>(['filters', name], searchFilters, {
     enabled: true,
   });
 

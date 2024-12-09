@@ -13,3 +13,11 @@
     @apply flex flex-col gap-5 pr-4 pb-3;
   }
 }
+
+.search_bar {
+  @apply mb-2;
+
+  &__close {
+    @apply cursor-pointer rounded-full hover:text-violet-500;
+  }
+}

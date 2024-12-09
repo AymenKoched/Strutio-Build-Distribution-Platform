@@ -4,6 +4,7 @@ import './globals.css';
 import { Theme } from '@radix-ui/themes';
 import { AppFooter, AppHeader } from '@strutio/app/components';
 import type { Metadata } from 'next';
+import React from 'react';
 
 import styles from './layout.module.scss';
 import QueryClientProvider from './QueryClientProvider.component';
