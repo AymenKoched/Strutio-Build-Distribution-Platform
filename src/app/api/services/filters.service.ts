@@ -18,7 +18,7 @@ export const getFilterDetails = async (id: string) => {
   });
 
   if (!filter) {
-    throw new Error('Filter not found.');
+    return;
   }
 
   const filterGroups: FilterGroup[] = await prisma.$queryRaw`
@@ -46,10 +46,6 @@ export const getFilterDetails = async (id: string) => {
       -- Select the full hierarchy
       SELECT * FROM filter_group_tree;
     `;
-
-  if (!filterGroups || filterGroups.length === 0) {
-    throw new Error('FilterGroup not found or no related FilterGroups.');
-  }
 
   const filterGroupIds = map(filterGroups, (fg) => fg.id);
   const detailedFilterGroups = await prisma.filterGroup.findMany({

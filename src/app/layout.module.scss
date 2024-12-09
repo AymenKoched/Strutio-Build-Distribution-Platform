@@ -1,0 +1,7 @@
+.container {
+  @apply flex min-h-screen max-w-full bg-[#F8F8FF] overflow-x-hidden lg:overflow-visible;
+}
+
+.content {
+  @apply flex w-full flex-1 grow flex-col;
+}

@@ -1,5 +1,7 @@
 import { $Enums } from '@prisma/client';
 
+import { AttributeType } from './build.response';
+
 export type FilterGroupType = {
   id: string;
   operator?: $Enums.FilterGroupOperator;
@@ -14,10 +16,4 @@ export type FilterConditionType = {
   operator: $Enums.FilterConditionOperator;
   value: string;
   attribute: AttributeType;
-};
-
-export type AttributeType = {
-  id: string;
-  name: string;
-  type: $Enums.AttributeType;
 };

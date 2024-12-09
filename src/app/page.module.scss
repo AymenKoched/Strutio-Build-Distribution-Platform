@@ -1,0 +1,11 @@
+.container {
+  @apply pt-10 px-4 pb-4 gap-4 grid grid-cols-3;
+}
+
+.flexible_builds_list {
+  @apply lg:col-span-1 col-span-full bg-violet-200;
+}
+
+.builds_list {
+  @apply col-span-2;
+}

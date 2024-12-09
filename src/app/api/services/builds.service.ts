@@ -6,7 +6,9 @@ import prisma from '@strutio/prisma/client';
 import { getFilterDetails } from './filters.service';
 
 export const getBuilds = async (filterId?: string) => {
-  if (!filterId) {
+  const filter = await getFilterDetails(filterId as string);
+
+  if (!filterId || !filter) {
     return prisma.build.findMany({
       include: {
         AttributeBuilds: {
@@ -18,9 +20,7 @@ export const getBuilds = async (filterId?: string) => {
     });
   }
 
-  const { filterGroups } = await getFilterDetails(filterId as string);
-
-  const query = createQuery(filterGroups);
+  const query = createQuery(filter?.filterGroups);
 
   return prisma.build.findMany({
     where: query,

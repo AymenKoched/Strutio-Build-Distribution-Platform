@@ -1,0 +1,34 @@
+.line_footer {
+  &__content {
+    @apply flex flex-col sm:flex-row flex-wrap justify-between items-center gap-2;
+    font-size: 14px;
+    line-height: 22px;
+
+    &__title {
+      @apply w-fit text-neutral-500 md:w-2/5 mb-1 md:mb-0;
+      font-weight: 400;
+    }
+
+    &__rules {
+      @apply flex flex-wrap justify-center w-fit text-neutral-400 opacity-70 whitespace-nowrap;
+      column-gap: 3.2rem;
+      font-weight: 500;
+
+      &__content {
+        @apply flex w-fit gap-2;
+      }
+
+      &__down_text {
+        @apply text-neutral-400 md:w-auto mb-1;
+      }
+    }
+  }
+}
+
+.single_line_footer {
+  @apply pt-[16px] pb-[12px] px-8 w-auto right-0 left-0 border-t border-gray-200 bg-transparent;
+}
+
+.icon {
+  @apply h-5 w-5;
+}

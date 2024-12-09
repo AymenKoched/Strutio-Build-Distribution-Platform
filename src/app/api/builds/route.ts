@@ -9,7 +9,7 @@ export const GET = async (request: NextRequest) => {
 
     const builds = await getBuilds(filterId as string);
 
-    return NextResponse.json({ builds }, { status: 200 });
+    return NextResponse.json(builds, { status: 200 });
   } catch (error) {
     console.error(error);
 

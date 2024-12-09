@@ -1,0 +1,15 @@
+.header {
+  @apply sticky top-0 z-50 px-10 shadow shadow-blue-50 bg-white w-screen;
+
+  &__container {
+    @apply flex items-center justify-between h-20;
+  }
+}
+
+.img_wrapper {
+  @apply w-fit flex items-center gap-2;
+
+  &__name {
+    @apply font-semibold text-lg text-neutral-700;
+  }
+}
