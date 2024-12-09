@@ -5,3 +5,7 @@
 .content {
   @apply flex w-full flex-1 grow flex-col;
 }
+
+.wrapper {
+  @apply relative mx-auto size-full max-w-screen-2xl;
+}

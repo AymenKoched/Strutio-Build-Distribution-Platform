@@ -1,7 +1,7 @@
 import '@radix-ui/themes/styles.css';
 import './globals.css';
 
-import { Container, Theme } from '@radix-ui/themes';
+import { Theme } from '@radix-ui/themes';
 import { AppFooter, AppHeader } from '@strutio/app/components';
 import type { Metadata } from 'next';
 
@@ -27,7 +27,7 @@ export default function RootLayout({
               <div className={styles.content}>
                 <AppHeader />
                 <main className={'grow'}>
-                  <Container>{children}</Container>
+                  <div className={styles.wrapper}>{children}</div>
                 </main>
                 <AppFooter />
               </div>

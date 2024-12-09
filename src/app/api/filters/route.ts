@@ -1,7 +1,21 @@
 import { FilterDTO, filterSchema } from '@strutio/models';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { createFilter } from '../services';
+import { createFilter, getFilters } from '../services';
+
+export const GET = async (request: NextRequest) => {
+  try {
+    const name = request.nextUrl.searchParams.get('name');
+
+    const filters = await getFilters(name || undefined);
+
+    return NextResponse.json(filters, { status: 200 });
+  } catch (error) {
+    console.error(error);
+
+    return NextResponse.json({ error }, { status: 500 });
+  }
+};
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -24,7 +38,7 @@ export const POST = async (request: NextRequest) => {
 
     const filter = await createFilter({ name, filterGroups });
 
-    return NextResponse.json({ filter }, { status: 200 });
+    return NextResponse.json(filter, { status: 200 });
   } catch (error) {
     console.error(error);
 

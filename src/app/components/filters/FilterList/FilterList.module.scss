@@ -1,5 +1,5 @@
 .container {
-  @apply text-neutral-700 p-6;
+  @apply text-neutral-700 p-6 h-fit;
 
   &__title {
     @apply mb-2 text-2xl font-bold;
@@ -10,6 +10,6 @@
   }
 
   &__list {
-    @apply flex flex-col gap-5;
+    @apply flex flex-col gap-5 pr-4 pb-3;
   }
 }

@@ -4,10 +4,9 @@ import { getBuilds } from '../services';
 
 export const GET = async (request: NextRequest) => {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const filterId = searchParams.get('filterId');
+    const filterId = request.nextUrl.searchParams.get('filterId');
 
-    const builds = await getBuilds(filterId as string);
+    const builds = await getBuilds(filterId || undefined);
 
     return NextResponse.json(builds, { status: 200 });
   } catch (error) {

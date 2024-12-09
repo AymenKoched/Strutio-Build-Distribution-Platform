@@ -12,6 +12,14 @@ import {
 import prisma from '@strutio/prisma/client';
 import { map } from 'lodash';
 
+export const getFilters = async (name?: string) => {
+  return prisma.filter.findMany(
+    name
+      ? { where: { name: { contains: name, mode: 'insensitive' } } }
+      : undefined,
+  );
+};
+
 export const getFilterDetails = async (id: string) => {
   const filter = await prisma.filter.findUnique({
     where: { id },

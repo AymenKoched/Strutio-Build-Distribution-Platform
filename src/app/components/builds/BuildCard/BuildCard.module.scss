@@ -1,16 +1,16 @@
 .build_card {
-  @apply rounded-lg border border-gray-200 bg-white p-4 shadow-md;
+  @apply rounded-lg border border-neutral-200 bg-white p-4 shadow-md;
 
   &__header {
     @apply mb-3 flex items-center justify-between;
   }
 
   &__title {
-    @apply text-lg font-semibold text-gray-800;
+    @apply text-lg font-semibold text-neutral-700;
   }
 
   &__timestamp {
-    @apply text-sm text-gray-500;
+    @apply text-sm text-neutral-400;
   }
 
   &__attributes {
@@ -20,11 +20,11 @@
       @apply flex items-center justify-between;
 
       &__name {
-        @apply font-medium text-gray-700;
+        @apply font-medium text-neutral-700;
       }
 
       &__value {
-        @apply text-gray-600;
+        @apply text-neutral-500;
       }
     }
   }

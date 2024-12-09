@@ -6,9 +6,21 @@ import prisma from '@strutio/prisma/client';
 import { getFilterDetails } from './filters.service';
 
 export const getBuilds = async (filterId?: string) => {
+  if (!filterId) {
+    return prisma.build.findMany({
+      include: {
+        AttributeBuilds: {
+          include: {
+            attribute: true,
+          },
+        },
+      },
+    });
+  }
+
   const filter = await getFilterDetails(filterId as string);
 
-  if (!filterId || !filter) {
+  if (!filter) {
     return prisma.build.findMany({
       include: {
         AttributeBuilds: {

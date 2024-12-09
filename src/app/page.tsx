@@ -1,4 +1,4 @@
-import { BuildsList } from '@strutio/app/components';
+import { BuildsList, FilterList } from '@strutio/app/components';
 import React from 'react';
 
 import styles from './page.module.scss';
@@ -6,7 +6,7 @@ import styles from './page.module.scss';
 export default async function Home() {
   return (
     <div className={styles.container}>
-      <BuildsList className={styles.flexible_builds_list} />
+      <FilterList className={styles.filters_list} />
       <BuildsList className={styles.builds_list} />
     </div>
   );

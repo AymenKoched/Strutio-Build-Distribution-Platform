@@ -32,11 +32,9 @@ export default function BuildsList({ className }: BuildsListProps) {
   );
 
   return (
-    <Card className={classNames(styles.container, className)} size="4">
+    <Card className={classNames(className, styles.container)} size="4">
       <h1 className={styles.container__title}>Builds</h1>
-
       <p className={styles.container__desc}>Review recent builds.</p>
-
       {isLoading ? loader : isEmpty(builds) ? <p>No builds yet!</p> : buildList}
     </Card>
   );

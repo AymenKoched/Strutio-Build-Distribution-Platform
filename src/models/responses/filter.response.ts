@@ -17,3 +17,11 @@ export type FilterConditionType = {
   value: string;
   attribute: AttributeType;
 };
+
+export type FilterType = {
+  id: string;
+  name: string;
+  filterGroupId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};

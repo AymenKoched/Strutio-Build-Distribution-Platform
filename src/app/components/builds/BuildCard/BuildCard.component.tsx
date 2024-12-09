@@ -1,16 +1,10 @@
 import { Avatar } from '@radix-ui/themes';
 import { BuildType } from '@strutio/models';
+import { formatDate } from '@strutio/utils';
 import classNames from 'classnames';
 import React from 'react';
 
 import styles from './BuildCard.module.scss';
-
-function formatDate(date: Date): string {
-  return `${date.toLocaleDateString()} ${date.toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
-  })}`;
-}
 
 export type BuildCardProps = {
   className?: string;

@@ -3,10 +3,10 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 
 export function useBuilds(filterId?: string) {
-  const searchBuilds = async () => {
-    const { data } = await axios.get<BuildType[]>(
-      `/api/builds?filterId=${filterId}`,
-    );
+  const searchBuilds = async (): Promise<BuildType[]> => {
+    const { data } = await axios.get<BuildType[]>('/api/builds', {
+      params: filterId ? { filterId } : {},
+    });
     return data;
   };
 
