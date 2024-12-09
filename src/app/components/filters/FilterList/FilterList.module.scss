@@ -1,5 +1,5 @@
 .container {
-  @apply text-neutral-700 p-6 h-fit;
+  @apply text-neutral-700 p-6 h-fit min-h-[700px];
 
   &__title {
     @apply mb-2 text-2xl font-bold;
@@ -18,6 +18,6 @@
   @apply mb-2;
 
   &__close {
-    @apply cursor-pointer rounded-full hover:text-violet-500;
+    @apply cursor-pointer rounded-full hover:text-violet-700;
   }
 }

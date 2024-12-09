@@ -1,7 +1,7 @@
 'use client';
 
 import { Card } from '@radix-ui/themes';
-import { useBuilds } from '@strutio/app/hooks';
+import { useBuilds, useUrlParam } from '@strutio/app/hooks';
 import classNames from 'classnames';
 import { isEmpty, map } from 'lodash';
 import React from 'react';
@@ -13,7 +13,10 @@ import styles from './BuildsList.module.scss';
 export type BuildsListProps = { className?: string };
 
 export default function BuildsList({ className }: BuildsListProps) {
-  const { builds, isLoading } = useBuilds();
+  const { getParam } = useUrlParam();
+  const filterId = getParam('filterId');
+
+  const { builds, isLoading } = useBuilds(filterId || undefined);
 
   const buildList = (
     <div className={styles.container__list}>
@@ -35,7 +38,17 @@ export default function BuildsList({ className }: BuildsListProps) {
     <Card className={classNames(className, styles.container)} size="4">
       <h1 className={styles.container__title}>Builds</h1>
       <p className={styles.container__desc}>Review recent builds.</p>
-      {isLoading ? loader : isEmpty(builds) ? <p>No builds yet!</p> : buildList}
+      {isLoading ? (
+        loader
+      ) : isEmpty(builds) ? (
+        filterId ? (
+          <p>No builds found matching this filter.</p>
+        ) : (
+          <p>No builds yet!</p>
+        )
+      ) : (
+        buildList
+      )}
     </Card>
   );
 }

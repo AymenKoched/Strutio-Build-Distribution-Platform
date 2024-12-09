@@ -5,7 +5,8 @@ import { Card, ScrollArea, TextField } from '@radix-ui/themes';
 import { useFilters, useUrlParam } from '@strutio/app/hooks';
 import classNames from 'classnames';
 import { isEmpty, map } from 'lodash';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDebounceValue } from 'usehooks-ts';
 
 import { FilterCard } from '../FilterCard';
 import { FilterCardSkeleton } from '../FilterCardSkeleton';
@@ -15,13 +16,20 @@ export type FilterListProps = { className?: string };
 
 export default function FilterList({ className }: FilterListProps) {
   const { getParam, updateParam, clearParam } = useUrlParam();
-  const name = getParam('name');
+  const initialName = getParam('name') || '';
+
+  const [searchInput, setSearchInput] = useState<string>(initialName);
+  const [name] = useDebounceValue(searchInput, 500);
 
   useEffect(() => {
-    if (name === '') clearParam('name');
-  }, [clearParam, name]);
+    if (name) {
+      updateParam('name', name);
+    } else {
+      clearParam('name');
+    }
+  }, [name, updateParam, clearParam]);
 
-  const { filters, isLoading } = useFilters(name || undefined);
+  const { filters, isLoading } = useFilters(name);
 
   const filtersList = (
     <ScrollArea type="always" scrollbars="vertical" style={{ height: 600 }}>
@@ -45,8 +53,8 @@ export default function FilterList({ className }: FilterListProps) {
     <TextField.Root
       className={styles.search_bar}
       placeholder={'Search filters by name'}
-      value={name || ''}
-      onChange={(e) => updateParam('name', e.target.value)}
+      value={searchInput}
+      onChange={(e) => setSearchInput(e.target.value)}
     >
       <TextField.Slot>
         <MagnifyingGlassIcon height="16" width="16" />
@@ -54,7 +62,7 @@ export default function FilterList({ className }: FilterListProps) {
       <TextField.Slot
         side={'right'}
         className={styles.search_bar__close}
-        onClick={() => clearParam('name')}
+        onClick={() => setSearchInput('')}
       >
         <Cross1Icon height="16" width="16" />
       </TextField.Slot>
@@ -71,9 +79,11 @@ export default function FilterList({ className }: FilterListProps) {
       {isLoading ? (
         loader
       ) : isEmpty(filters) ? (
-        <p>No filters yet!</p>
-      ) : !filters ? (
-        <p>No filters with this name!</p>
+        name ? (
+          <p>No filters found matching this name.</p>
+        ) : (
+          <p>No filters yet!</p>
+        )
       ) : (
         filtersList
       )}
