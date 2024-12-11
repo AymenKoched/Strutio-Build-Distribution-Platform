@@ -18,8 +18,8 @@ export type FilterConditionInputProps = {
   onConditionChange: (updatedCondition: FilterConditionDTO) => void;
   onAddCondition: () => void;
   onRemoveCondition: () => void;
-  isRemovable: boolean;
-  isLastCondition: boolean;
+  hideRemove?: boolean;
+  hideAdd?: boolean;
 };
 
 const FilterConditionInput = ({
@@ -28,8 +28,8 @@ const FilterConditionInput = ({
   onConditionChange,
   onAddCondition,
   onRemoveCondition,
-  isRemovable,
-  isLastCondition,
+  hideRemove,
+  hideAdd,
 }: FilterConditionInputProps) => {
   const { attributes, isLoading: attributesLoading } = useAttributes();
 
@@ -81,12 +81,12 @@ const FilterConditionInput = ({
           ...condition,
           operatorGroup: value as FilterGroupOperator,
         });
-        if (isLastCondition) {
+        if (!hideAdd) {
           onAddCondition();
         }
       }
     },
-    [condition, isLastCondition, onConditionChange, onAddCondition],
+    [condition, hideAdd, onConditionChange, onAddCondition],
   );
 
   return (
@@ -150,7 +150,7 @@ const FilterConditionInput = ({
         <TextField.Root
           className={styles.condition__item}
           disabled={!condition?.attributeId || !condition?.operator}
-          value={condition?.value || ''}
+          value={condition?.value}
           onChange={handleValueChange}
           placeholder="Enter condition value"
           size="3"
@@ -194,7 +194,7 @@ const FilterConditionInput = ({
         </Callout.Root>
       </div>
 
-      {isRemovable && (
+      {!hideRemove && (
         <div
           className={styles.condition__delete_condition_button}
           onClick={onRemoveCondition}

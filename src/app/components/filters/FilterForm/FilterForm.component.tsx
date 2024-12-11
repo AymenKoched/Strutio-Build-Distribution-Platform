@@ -4,11 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FilterConditionOperator } from '@prisma/client';
 import { Button, Card, TextField } from '@radix-ui/themes';
 import { ErrorMessage, FilterConditionInput } from '@strutio/app/components';
-import { FilterConditionDTO, filterSchema } from '@strutio/models';
+import { useCreateFilter } from '@strutio/app/hooks';
+import { FilterConditionDTO, FilterDTO, filterSchema } from '@strutio/models';
 import classNames from 'classnames';
-import React, { useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useCallback, useEffect } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
-import { z } from 'zod';
 
 import styles from './FilterForm.module.scss';
 
@@ -16,16 +17,17 @@ export type FilterFormProps = {
   className?: string;
 };
 
-type FilterFormData = z.infer<typeof filterSchema>;
-
 const FilterForm = ({ className }: FilterFormProps) => {
+  const router = useRouter();
+  const { mutate, isLoading, isSuccess, data } = useCreateFilter();
+
   const {
     register,
     control,
     handleSubmit,
-    getValues,
+    reset,
     formState: { errors },
-  } = useForm<FilterFormData>({
+  } = useForm<FilterDTO>({
     resolver: zodResolver(filterSchema),
     defaultValues: {
       filterGroups: [
@@ -42,8 +44,15 @@ const FilterForm = ({ className }: FilterFormProps) => {
     name: 'filterGroups',
   });
 
-  console.log({ values: getValues() });
-  console.log({ errors });
+  const onSubmit = handleSubmit((data) => {
+    mutate(data);
+  });
+
+  useEffect(() => {
+    if (isSuccess && data?.id) {
+      router.push(`/?filterId=${data.id}`);
+    }
+  }, [isSuccess, data]);
 
   const addCondition = useCallback(() => {
     append({
@@ -67,14 +76,21 @@ const FilterForm = ({ className }: FilterFormProps) => {
     [remove],
   );
 
+  const resetFilters = useCallback(() => {
+    reset({
+      name: '',
+      filterGroups: [
+        {
+          attributeId: '',
+          value: '',
+        },
+      ],
+    });
+  }, [reset]);
+
   return (
     <Card className={classNames(className, styles.container)} size="4">
-      <form
-        className={styles.form}
-        onSubmit={handleSubmit((data) => {
-          console.log({ data });
-        })}
-      >
+      <form className={styles.form} onSubmit={onSubmit}>
         <div className={styles.form_group}>
           <label htmlFor="name" className={styles.form_group__label}>
             Filter Name:
@@ -113,34 +129,26 @@ const FilterForm = ({ className }: FilterFormProps) => {
                         }
                         onAddCondition={addCondition}
                         onRemoveCondition={() => removeCondition(index)}
-                        isRemovable={index !== 0}
-                        isLastCondition={index === fields.length - 1}
+                        hideRemove={index === 0}
+                        hideAdd={index !== fields.length - 1}
                       />
                       <div className={styles.form_group__errors}>
                         {errors?.filterGroups?.[index]?.attributeId && (
                           <ErrorMessage
                             className={styles.form_group__error}
-                            text={
-                              errors.filterGroups[index].attributeId
-                                .message as string
-                            }
+                            text={'Attribute is invalid'}
                           />
                         )}
                         {errors?.filterGroups?.[index]?.operator && (
                           <ErrorMessage
                             className={styles.form_group__error}
-                            text={
-                              errors.filterGroups[index].operator
-                                .message as string
-                            }
+                            text={'Operator is invalid'}
                           />
                         )}
                         {errors?.filterGroups?.[index]?.value && (
                           <ErrorMessage
                             className={styles.form_group__error}
-                            text={
-                              errors.filterGroups[index].value.message as string
-                            }
+                            text={'Value is invalid'}
                           />
                         )}
                       </div>
@@ -158,7 +166,8 @@ const FilterForm = ({ className }: FilterFormProps) => {
             color="crimson"
             variant="soft"
             size="3"
-            type={'reset'}
+            type={'button'}
+            onClick={resetFilters}
           >
             Cancel
           </Button>
@@ -168,6 +177,7 @@ const FilterForm = ({ className }: FilterFormProps) => {
             variant="soft"
             size="3"
             type={'submit'}
+            loading={isLoading}
           >
             Create
           </Button>

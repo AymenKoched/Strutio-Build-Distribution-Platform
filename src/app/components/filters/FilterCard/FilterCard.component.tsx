@@ -6,10 +6,12 @@ import {
   Pencil1Icon,
 } from '@radix-ui/react-icons';
 import { DropdownMenu, IconButton } from '@radix-ui/themes';
+import { ActionConfirmationModal } from '@strutio/app/components';
 import { useDeleteFilter, useUrlParam } from '@strutio/app/hooks';
 import { FilterType } from '@strutio/models';
 import { formatDate } from '@strutio/utils';
 import classNames from 'classnames';
+import { useCallback, useMemo } from 'react';
 
 import styles from './FilterCard.module.scss';
 
@@ -20,14 +22,33 @@ export type FilterCardProps = {
 
 export default function FilterCard({ className, filter }: FilterCardProps) {
   const { getParam, updateParam, clearParam } = useUrlParam();
-  const { mutate } = useDeleteFilter();
+  const { mutate, isLoading: deleteLoading } = useDeleteFilter();
 
   const filterId = getParam('filterId');
-  const isSelected = filterId === filter.id;
+  const isSelected = useMemo(
+    () => filterId === filter.id,
+    [filter.id, filterId],
+  );
 
   const handleDelete = () => {
+    if (getParam('filterId')) {
+      clearParam('filterId');
+    }
     mutate(filter.id);
   };
+
+  const deleteTrigger = (
+    <DropdownMenu.Item
+      className={'cursor-pointer'}
+      onSelect={(e) => e.preventDefault()}
+      color="red"
+    >
+      <div className={'flex w-full items-center justify-between gap-10'}>
+        <p>Delete</p>
+        <Cross1Icon />
+      </div>
+    </DropdownMenu.Item>
+  );
 
   const dropdownIcon = (
     <DropdownMenu.Root>
@@ -41,26 +62,33 @@ export default function FilterCard({ className, filter }: FilterCardProps) {
           <DotsVerticalIcon width={'16'} height={'16'} />
         </IconButton>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content>
+
+      <DropdownMenu.Content onClick={(e) => e.stopPropagation()}>
         <DropdownMenu.Item className={'cursor-pointer'}>
           <div className={'flex w-full items-center justify-between gap-10'}>
             <p>Edit</p>
             <Pencil1Icon />
           </div>
         </DropdownMenu.Item>
+
         <DropdownMenu.Separator />
-        <DropdownMenu.Item
-          className={'cursor-pointer'}
-          onClick={handleDelete}
-          color="red"
-        >
-          <div className={'flex w-full items-center justify-between gap-10'}>
-            <p>Delete</p>
-            <Cross1Icon />
-          </div>
-        </DropdownMenu.Item>
+
+        <ActionConfirmationModal
+          trigger={deleteTrigger}
+          title={'Delete Filter'}
+          description={'Are you sure? This filter will be deleted.'}
+          confirmText={'Delete'}
+          onConfirm={handleDelete}
+          isLoading={deleteLoading}
+        />
       </DropdownMenu.Content>
     </DropdownMenu.Root>
+  );
+
+  const handleCardClick = useCallback(
+    () =>
+      isSelected ? clearParam('filterId') : updateParam('filterId', filter.id),
+    [filter.id, isSelected],
   );
 
   return (
@@ -70,9 +98,7 @@ export default function FilterCard({ className, filter }: FilterCardProps) {
         styles.filter_card,
         isSelected ? '!bg-violet-50' : '',
       )}
-      onClick={() =>
-        isSelected ? clearParam('filterId') : updateParam('filterId', filter.id)
-      }
+      onClick={handleCardClick}
     >
       <div className={'flex flex-row items-start justify-between'}>
         <h2 className={styles.filter_card__title}>{filter.name}</h2>

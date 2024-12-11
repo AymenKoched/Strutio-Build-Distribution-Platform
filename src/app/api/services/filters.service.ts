@@ -13,11 +13,10 @@ import prisma from '@strutio/prisma/client';
 import { map } from 'lodash';
 
 export const getFilters = async (name?: string) => {
-  return prisma.filter.findMany(
-    name
-      ? { where: { name: { contains: name, mode: 'insensitive' } } }
-      : undefined,
-  );
+  return prisma.filter.findMany({
+    where: name ? { name: { contains: name, mode: 'insensitive' } } : undefined,
+    orderBy: { createdAt: 'desc' },
+  });
 };
 
 export const getFilterDetails = async (id: string) => {

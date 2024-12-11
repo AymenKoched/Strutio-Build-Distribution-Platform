@@ -1,4 +1,4 @@
-import { FilterType } from '@strutio/models';
+import { FilterDTO, FilterType } from '@strutio/models';
 import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
@@ -37,6 +37,20 @@ export function useDeleteFilter() {
 
   return useMutation<void, unknown, string>({
     mutationFn: deleteFilter,
+    onSuccess: () => Promise.all([queryClient.invalidateQueries(['filters'])]),
+  });
+}
+
+export function useCreateFilter() {
+  const queryClient = useQueryClient();
+
+  const createFilter = async (payload: FilterDTO) => {
+    const { data } = await axios.post(`/api/filters`, payload);
+    return data;
+  };
+
+  return useMutation<FilterType, unknown, FilterDTO>({
+    mutationFn: createFilter,
     onSuccess: () => Promise.all([queryClient.invalidateQueries(['filters'])]),
   });
 }

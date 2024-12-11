@@ -22,6 +22,7 @@ export const POST = async (request: NextRequest) => {
     const body = await request.json();
 
     const parsedBody = filterSchema.safeParse(body);
+
     if (!parsedBody.success) {
       const error = parsedBody.error.errors.reduce(
         (acc: Record<string, string>, error) => {

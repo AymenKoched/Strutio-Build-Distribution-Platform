@@ -70,6 +70,7 @@ const createQuery = (filterGroups: FilterGroupType[]): BuildWhereInput => {
             attributeId: item1.filterCondition.attributeId,
             value: {
               [operatorQueryKey]: item1?.filterCondition?.value,
+              mode: 'insensitive',
             },
           },
         },
@@ -90,6 +91,7 @@ const createQuery = (filterGroups: FilterGroupType[]): BuildWhereInput => {
             attributeId: item2.filterCondition.attributeId,
             value: {
               [operatorQueryKey]: item2.filterCondition?.value,
+              mode: 'insensitive',
             },
           },
         },
@@ -115,6 +117,7 @@ const createQuery = (filterGroups: FilterGroupType[]): BuildWhereInput => {
           attributeId: item.filterCondition.attributeId,
           value: {
             [operatorQueryKey]: item.filterCondition.value,
+            mode: 'insensitive',
           },
         },
       },
