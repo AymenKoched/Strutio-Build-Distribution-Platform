@@ -44,7 +44,7 @@ export default function FilterCard({ className, filter }: FilterCardProps) {
       onSelect={(e) => e.preventDefault()}
       color="red"
     >
-      <div className={'flex w-full items-center justify-between gap-10'}>
+      <div className={styles.filter_card__dropdown_item}>
         <p>Delete</p>
         <Cross1Icon />
       </div>
@@ -67,7 +67,7 @@ export default function FilterCard({ className, filter }: FilterCardProps) {
       <DropdownMenu.Content onClick={(e) => e.stopPropagation()}>
         <Link href={`/filters/edit/${filter.id}`}>
           <DropdownMenu.Item className={'cursor-pointer'}>
-            <div className={'flex w-full items-center justify-between gap-10'}>
+            <div className={styles.filter_card__dropdown_item}>
               <p>Edit</p>
               <Pencil1Icon />
             </div>
@@ -103,7 +103,7 @@ export default function FilterCard({ className, filter }: FilterCardProps) {
       )}
       onClick={handleCardClick}
     >
-      <div className={'flex flex-row items-start justify-between'}>
+      <div className={styles.filter_card__header}>
         <h2 className={styles.filter_card__title}>{filter.name}</h2>
         {dropdownIcon}
       </div>

@@ -109,7 +109,11 @@ const FilterConditionInput = ({
               </Select.Item>
             ) : (
               attributes?.map((attribute) => (
-                <Select.Item key={attribute.id} value={attribute.id}>
+                <Select.Item
+                  className={'cursor-pointer'}
+                  key={attribute.id}
+                  value={attribute.id}
+                >
                   {attribute.name}
                 </Select.Item>
               ))
@@ -133,7 +137,7 @@ const FilterConditionInput = ({
               map(getOperatorsForType(selectedAttribute.type), (operator) => (
                 <Select.Item
                   key={operator}
-                  className="flex justify-center"
+                  className="flex cursor-pointer justify-center"
                   value={operator}
                 >
                   {getOperatorLabel(operator)}
@@ -174,7 +178,7 @@ const FilterConditionInput = ({
             {map(FilterGroupOperator, (operator) => (
               <Select.Item
                 key={operator}
-                className="flex justify-center"
+                className="flex cursor-pointer justify-center"
                 value={operator}
               >
                 {operator}
