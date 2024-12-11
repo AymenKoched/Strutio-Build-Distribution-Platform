@@ -1,0 +1,23 @@
+.condition {
+  @apply flex flex-col gap-2;
+
+  &__items {
+    @apply flex gap-4 justify-between w-full;
+  }
+
+  &__item {
+    @apply flex-1;
+  }
+
+  &__footer {
+    @apply flex justify-start items-center gap-3;
+  }
+
+  &__delete_condition_button {
+    @apply flex items-center bg-rose-50 hover:bg-red-100 transition-all duration-100 text-rose-600 rounded-md gap-2 p-3 self-end w-fit cursor-pointer;
+  }
+
+  &__operator_group_selector {
+    @apply flex-none w-52;
+  }
+}

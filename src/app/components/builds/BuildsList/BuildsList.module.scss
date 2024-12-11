@@ -6,7 +6,7 @@
   }
 
   &__desc {
-    @apply mb-7 text-sm text-neutral-400;
+    @apply mb-7 text-sm text-neutral-400 flex justify-between;
   }
 
   &__list {

@@ -3,7 +3,7 @@ import React from 'react';
 
 import styles from './page.module.scss';
 
-export default async function Home() {
+export default function Home() {
   return (
     <div className={styles.container}>
       <FilterList className={styles.filters_list} />

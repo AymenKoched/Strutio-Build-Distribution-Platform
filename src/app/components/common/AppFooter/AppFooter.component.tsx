@@ -9,7 +9,7 @@ export default function AppFooter() {
     <footer className={styles.single_line_footer}>
       <div className={styles.line_footer__content}>
         <div className={styles.line_footer__content__title}>
-          Strutio © {new Date().getFullYear()} By Aymen Koched
+          Strutio © {new Date().getFullYear()}, By Aymen Koched
         </div>
         <div className={styles.line_footer__content__rules}>
           <Link

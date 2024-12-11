@@ -4,7 +4,7 @@ import { Card } from '@radix-ui/themes';
 import { useBuilds, useUrlParam } from '@strutio/app/hooks';
 import classNames from 'classnames';
 import { isEmpty, map } from 'lodash';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { BuildCard } from '../BuildCard';
 import { BuildCardSkeleton } from '../BuildCardSkeleton';
@@ -17,6 +17,8 @@ export default function BuildsList({ className }: BuildsListProps) {
   const filterId = getParam('filterId');
 
   const { builds, isLoading } = useBuilds(filterId || undefined);
+
+  const buildsCount = useMemo(() => builds?.length || 0, [builds]);
 
   const buildList = (
     <div className={styles.container__list}>
@@ -37,7 +39,12 @@ export default function BuildsList({ className }: BuildsListProps) {
   return (
     <Card className={classNames(className, styles.container)} size="4">
       <h1 className={styles.container__title}>Builds</h1>
-      <p className={styles.container__desc}>Review recent builds.</p>
+      <div className={styles.container__desc}>
+        <p>Review recent builds.</p>
+        <p>
+          {buildsCount} {buildsCount === 1 ? 'build' : 'builds'} found
+        </p>
+      </div>
       {isLoading ? (
         loader
       ) : isEmpty(builds) ? (

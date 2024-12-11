@@ -407,6 +407,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^3.9.1":
+  version: 3.9.1
+  resolution: "@hookform/resolvers@npm:3.9.1"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: 8a4056db3860b12ee30921ba352996104d6ae75ac45996d4c8b6df429e07ee73f5b87c82a22a15403789213f6f52f5fead1c2637b26ef624068b68d213362cd1
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.13.0":
   version: 0.13.0
   resolution: "@humanwhocodes/config-array@npm:0.13.0"
@@ -4635,6 +4644,7 @@ __metadata:
     "@commitlint/cli": 17.1.2
     "@commitlint/config-conventional": 17.1.0
     "@commitlint/prompt": 17.1.2
+    "@hookform/resolvers": ^3.9.1
     "@prisma/client": 5.3.1
     "@radix-ui/react-icons": ^1.3.2
     "@radix-ui/themes": ^3.1.6
@@ -4664,6 +4674,7 @@ __metadata:
     prisma: 5.3.1
     react: ^18.3.1
     react-dom: ^18.3.1
+    react-hook-form: ^7.54.0
     react-query: 3.39.3
     sass: ^1.82.0
     tailwindcss: ^3.4.1
@@ -7743,6 +7754,15 @@ __metadata:
   peerDependencies:
     react: ^18.3.1
   checksum: a752496c1941f958f2e8ac56239172296fcddce1365ce45222d04a1947e0cc5547df3e8447f855a81d6d39f008d7c32eab43db3712077f09e3f67c4874973e85
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.54.0":
+  version: 7.54.0
+  resolution: "react-hook-form@npm:7.54.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 8dbc68e8b82aafda1271bbc291052b5efb091505865cd10e3d7dd618ca3870bd05596d7ba68f128427d47ff11e0d9f03089fd7afb88d2a8865ff81f21af417a0
   languageName: node
   linkType: hard
 

@@ -1,8 +1,12 @@
 .container {
   @apply text-neutral-700 p-6 h-fit min-h-[700px];
 
+  &__header {
+    @apply mb-2 flex items-center justify-between;
+  }
+
   &__title {
-    @apply mb-2 text-2xl font-bold;
+    @apply text-2xl font-bold;
   }
 
   &__desc {
@@ -10,14 +14,18 @@
   }
 
   &__list {
-    @apply flex flex-col gap-5 pr-4 pb-3;
+    @apply flex flex-col gap-5;
   }
 }
 
 .search_bar {
   @apply mb-2;
 
-  &__close {
-    @apply cursor-pointer rounded-full hover:text-violet-700;
+  &__clear_btn {
+    @apply cursor-pointer;
   }
+}
+
+.create_btn {
+  @apply cursor-pointer;
 }

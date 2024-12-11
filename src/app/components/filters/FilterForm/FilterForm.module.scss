@@ -1,0 +1,43 @@
+.container {
+  @apply w-full text-neutral-700;
+
+  .form {
+    @apply flex flex-col gap-6;
+
+    .form_group {
+      @apply flex flex-col gap-2;
+
+      &__label {
+        @apply text-lg font-medium;
+      }
+
+      &__error {
+        @apply mt-1;
+      }
+
+      &__items {
+        @apply flex flex-col gap-10;
+      }
+
+      &__item {
+        @apply flex flex-col gap-2;
+      }
+
+      &__errors {
+        @apply flex gap-4 justify-between w-full;
+      }
+
+      &__error {
+        @apply flex-1;
+      }
+    }
+
+    &__footer {
+      @apply flex justify-end pt-4 w-full gap-3 border-t border-gray-300;
+
+      &__icon {
+        @apply cursor-pointer;
+      }
+    }
+  }
+}

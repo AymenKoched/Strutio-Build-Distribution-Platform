@@ -1,0 +1,11 @@
+.container {
+  @apply text-neutral-700 flex flex-col gap-6 min-h-screen;
+
+  &__title {
+    @apply text-2xl font-bold;
+  }
+
+  &__form {
+    @apply max-w-[900px] w-full self-center;
+  }
+}
