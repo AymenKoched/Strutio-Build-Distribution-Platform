@@ -4,22 +4,29 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FilterConditionOperator } from '@prisma/client';
 import { Button, Card, TextField } from '@radix-ui/themes';
 import { ErrorMessage, FilterConditionInput } from '@strutio/app/components';
-import { useCreateFilter } from '@strutio/app/hooks';
+import { useCreateFilter, useUpdateFilter } from '@strutio/app/hooks';
 import { FilterConditionDTO, FilterDTO, filterSchema } from '@strutio/models';
 import classNames from 'classnames';
 import { useRouter } from 'next/navigation';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 
 import styles from './FilterForm.module.scss';
 
 export type FilterFormProps = {
   className?: string;
+  filter?: FilterDTO;
+  filterId?: string;
 };
 
-const FilterForm = ({ className }: FilterFormProps) => {
+const FilterForm = ({ className, filter, filterId }: FilterFormProps) => {
   const router = useRouter();
-  const { mutate, isLoading, isSuccess, data } = useCreateFilter();
+
+  const createMutation = useCreateFilter();
+  const updateMutation = useUpdateFilter();
+
+  const isUpdate = useMemo(() => filter && filterId, [filter, filterId]);
+  const mutation = isUpdate ? updateMutation : createMutation;
 
   const {
     register,
@@ -29,14 +36,16 @@ const FilterForm = ({ className }: FilterFormProps) => {
     formState: { errors },
   } = useForm<FilterDTO>({
     resolver: zodResolver(filterSchema),
-    defaultValues: {
-      filterGroups: [
-        {
-          attributeId: '',
-          value: '',
+    defaultValues: filter
+      ? filter
+      : {
+          filterGroups: [
+            {
+              attributeId: '',
+              value: '',
+            },
+          ],
         },
-      ],
-    },
   });
 
   const { fields, append, remove, update } = useFieldArray({
@@ -45,14 +54,18 @@ const FilterForm = ({ className }: FilterFormProps) => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    mutate(data);
+    if (isUpdate) {
+      mutation.mutate({ id: filterId, payload: data } as any);
+    } else {
+      mutation.mutate(data as any);
+    }
   });
 
   useEffect(() => {
-    if (isSuccess && data?.id) {
-      router.push(`/?filterId=${data.id}`);
+    if (mutation.isSuccess && mutation.data?.id) {
+      router.push(`/?filterId=${mutation.data.id}`);
     }
-  }, [isSuccess, data]);
+  }, [mutation.isSuccess, mutation.data]);
 
   const addCondition = useCallback(() => {
     append({
@@ -177,9 +190,9 @@ const FilterForm = ({ className }: FilterFormProps) => {
             variant="soft"
             size="3"
             type={'submit'}
-            loading={isLoading}
+            loading={mutation.isLoading}
           >
-            Create
+            {isUpdate ? 'Edit Filter' : 'Create Filter'}
           </Button>
         </div>
       </form>

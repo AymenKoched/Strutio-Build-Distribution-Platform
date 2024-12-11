@@ -11,6 +11,7 @@ import { useDeleteFilter, useUrlParam } from '@strutio/app/hooks';
 import { FilterType } from '@strutio/models';
 import { formatDate } from '@strutio/utils';
 import classNames from 'classnames';
+import Link from 'next/link';
 import { useCallback, useMemo } from 'react';
 
 import styles from './FilterCard.module.scss';
@@ -64,12 +65,14 @@ export default function FilterCard({ className, filter }: FilterCardProps) {
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Content onClick={(e) => e.stopPropagation()}>
-        <DropdownMenu.Item className={'cursor-pointer'}>
-          <div className={'flex w-full items-center justify-between gap-10'}>
-            <p>Edit</p>
-            <Pencil1Icon />
-          </div>
-        </DropdownMenu.Item>
+        <Link href={`/filters/edit/${filter.id}`}>
+          <DropdownMenu.Item className={'cursor-pointer'}>
+            <div className={'flex w-full items-center justify-between gap-10'}>
+              <p>Edit</p>
+              <Pencil1Icon />
+            </div>
+          </DropdownMenu.Item>
+        </Link>
 
         <DropdownMenu.Separator />
 

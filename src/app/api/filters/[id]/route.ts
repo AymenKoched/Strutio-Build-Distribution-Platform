@@ -64,12 +64,9 @@ export const PUT = async (
     }
     const { name, filterGroups }: FilterDTO = parsedBody.data;
 
-    await updateFilter(id, { name, filterGroups });
+    const updatedFilter = await updateFilter(id, { name, filterGroups });
 
-    return NextResponse.json(
-      { message: 'Filter and related groups updated successfully' },
-      { status: 200 },
-    );
+    return NextResponse.json(updatedFilter, { status: 200 });
   } catch (error) {
     console.error(error);
 

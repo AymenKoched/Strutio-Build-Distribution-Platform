@@ -1,6 +1,11 @@
-import { FilterDTO, FilterType } from '@strutio/models';
+import { FilterDTO, FilterGroupType, FilterType } from '@strutio/models';
 import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+
+type getFilterType = {
+  filter: FilterType;
+  filterGroups: FilterGroupType[];
+};
 
 export function useFilters(name?: string) {
   const searchFilters = async (): Promise<FilterType[]> => {
@@ -21,6 +26,29 @@ export function useFilters(name?: string) {
 
   return {
     filters,
+    isError,
+    error,
+    isLoading,
+  };
+}
+
+export function useFilter(id: string) {
+  const searchFilters = async () => {
+    const { data } = await axios.get<getFilterType>(`/api/filters/${id}`);
+    return data;
+  };
+
+  const {
+    data: filter,
+    isError,
+    error,
+    isLoading,
+  } = useQuery(['filter', id], searchFilters, {
+    enabled: true,
+  });
+
+  return {
+    filter,
     isError,
     error,
     isLoading,
@@ -52,5 +80,23 @@ export function useCreateFilter() {
   return useMutation<FilterType, unknown, FilterDTO>({
     mutationFn: createFilter,
     onSuccess: () => Promise.all([queryClient.invalidateQueries(['filters'])]),
+  });
+}
+
+export function useUpdateFilter() {
+  const queryClient = useQueryClient();
+
+  const updateFilter = async (id: string, payload: FilterDTO) => {
+    const { data } = await axios.put(`/api/filters/${id}`, payload);
+    return data;
+  };
+
+  return useMutation<FilterType, unknown, { id: string; payload: FilterDTO }>({
+    mutationFn: ({ id, payload }) => updateFilter(id, payload),
+    onSuccess: (data) =>
+      Promise.all([
+        queryClient.invalidateQueries(['filters']),
+        queryClient.invalidateQueries(['filter', data.id]),
+      ]),
   });
 }

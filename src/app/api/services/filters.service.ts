@@ -130,7 +130,7 @@ export const updateFilter = async (id: string, payload: FilterDTO) => {
     throw new Error('Filter not found.');
   }
 
-  await prisma.$transaction(async (tx) => {
+  return prisma.$transaction(async (tx) => {
     // Update the filter name if it has changed
     if (existingFilter.name !== name) {
       await tx.filter.update({
@@ -162,6 +162,8 @@ export const updateFilter = async (id: string, payload: FilterDTO) => {
     });
 
     await tx.filterGroup.delete({ where: { id: oldFilerGroupId } });
+
+    return tx.filter.findUnique({ where: { id } });
   });
 };
 
