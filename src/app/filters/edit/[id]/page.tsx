@@ -1,6 +1,6 @@
 import React from 'react';
 
-import EditPage from './EditPage.component';
+import EditFilterPage from './EditFilterPage.component';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -9,5 +9,5 @@ interface Props {
 export default async function EditFilter({ params }: Props) {
   const filterId = (await params).id;
 
-  return <EditPage filterId={filterId} />;
+  return <EditFilterPage filterId={filterId} />;
 }

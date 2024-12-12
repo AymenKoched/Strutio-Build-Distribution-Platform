@@ -111,7 +111,7 @@ const FilterForm = ({ className, filter, filterId }: FilterFormProps) => {
           <TextField.Root
             id={'name'}
             {...register('name')}
-            placeholder={'put your filter name'}
+            placeholder={'Put your filter name'}
             size={'3'}
             radius={'medium'}
           />

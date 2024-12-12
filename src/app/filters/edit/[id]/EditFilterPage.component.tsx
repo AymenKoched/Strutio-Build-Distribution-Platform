@@ -10,7 +10,7 @@ import styles from './page.module.scss';
 
 export type EditPageProps = { filterId: string };
 
-const EditPage = ({ filterId }: EditPageProps) => {
+const EditFilterPage = ({ filterId }: EditPageProps) => {
   const { filter, isLoading } = useFilter(filterId);
   const transformedFilter = useMemo(
     () => (filter ? transformFilter(filter) : undefined),
@@ -35,4 +35,4 @@ const EditPage = ({ filterId }: EditPageProps) => {
   );
 };
 
-export default EditPage;
+export default EditFilterPage;

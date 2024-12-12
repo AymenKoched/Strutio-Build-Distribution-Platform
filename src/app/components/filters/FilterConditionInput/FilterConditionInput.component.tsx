@@ -55,7 +55,6 @@ const FilterConditionInput = ({
         onConditionChange({
           ...condition,
           operator: value as FilterConditionOperator,
-          value: '',
         });
       }
     },
