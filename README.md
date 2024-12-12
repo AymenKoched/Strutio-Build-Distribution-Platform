@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Strutio - Filtering System
 
-## Getting Started
+## Overview
 
-First, run the development server:
+Filtering System Strutio is a Next.js application that utilizes Prisma, PostgreSQL, and TailwindCSS to deliver a modern and efficient filtering system. This repository is designed with best practices, leveraging tools like Docker, ESLint, Prettier, and Husky for seamless development and deployment workflows.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Built with Next.js for both frontend and backend.
+- PostgreSQL database managed with Prisma.
+- TailwindCSS for responsive and modern UI.
+- Dockerized setup for consistent environments.
+- Linting and formatting with ESLint and Prettier.
+- Commit linting and pre-commit hooks with Husky and Commitizen.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Prerequisites
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Before setting up the project, ensure the following are installed:
 
-## Learn More
+- [Node.js](https://nodejs.org/en)(v18 or higher)
+- [Yarn](https://yarnpkg.com/) (v3 or higher)
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-To learn more about Next.js, take a look at the following resources:
+## Setup Instructions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the Repository
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   ```bash
+   git clone https://github.com/AymenKoched/Strutio-Build-Distribution-Platform.git
+   cd filtering-system-strutio
+   ```
 
-## Deploy on Vercel
+2. Install Dependencies
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   yarn install
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Setup Environment Variables
+
+   Create a .env file in the root directory by copying the .env.example file:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+4. Create docker containers
+
+   Spin up the Docker containers for the database and other services:
+
+   ```bash
+   yarn stack:up
+   ```
+
+5. Run Migrations
+
+   Ensure your database is up-to-date with the latest schema:
+
+   ```bash
+   yarn prisma:migration
+   ```
+
+6. Start the Development Environment
+
+   Run the application in development mode:
+
+   ```bash
+   yarn dev
+   ```
+
+## Additional Scripts
+
+- Lint and Fix Code:
+  ```bash
+  yarn lint:fix
+  ```
+- Format Prisma Schema:
+  ```bash
+  yarn prisma:format
+  ```
+- Stop Docker Containers:
+  ```bash
+  yarn stack:down
+  ```
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE.md file for details.
+
+## Contact
+
+For questions or feedback, please reach out at [aymenkoched@gmail.com].
