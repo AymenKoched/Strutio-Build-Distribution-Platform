@@ -17,7 +17,7 @@ Filtering System Strutio is a Next.js application that utilizes Prisma, PostgreS
 
 Before setting up the project, ensure the following are installed:
 
-- [Node.js](https://nodejs.org/en)(v18 or higher)
+- [Node.js](https://nodejs.org/en) (v18 or higher)
 - [Yarn](https://yarnpkg.com/) (v3 or higher)
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
