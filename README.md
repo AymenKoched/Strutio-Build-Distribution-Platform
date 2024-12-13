@@ -70,6 +70,14 @@ Before setting up the project, ensure the following are installed:
    yarn dev
    ```
 
+7. Seed the database
+
+   Send a POST request to the /api/seed endpoint using a tool like curl, Postman, or your browser (if supported). For example:
+
+   ```bash
+   curl -X POST http://localhost:3000/api/seed
+   ```
+
 ## Additional Scripts
 
 - Lint and Fix Code:
