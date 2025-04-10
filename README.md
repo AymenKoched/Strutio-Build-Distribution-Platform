@@ -4,6 +4,8 @@
 
 Filtering System Strutio is a Next.js application that utilizes Prisma, PostgreSQL, and TailwindCSS to deliver a modern and efficient filtering system. This repository is designed with best practices, leveraging tools like Docker, ESLint, Prettier, and Husky for seamless development and deployment workflows.
 
+[View System Design](./system-design.md)
+
 ## Features
 
 - Built with Next.js for both frontend and backend.
